@@ -16,7 +16,7 @@
       "DisplayName": "The Grelwood"
     },
     {
-      "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_out.tdt",
+      "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_in.tdt",
       "ExpectedCount": 1,
       "DisplayName": "Mud Burrow"
     }
@@ -38,7 +38,7 @@
       "DisplayName": "The Grelwood"
     },
     {
-      "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_out.tdt",
+      "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_in.tdt",
       "ExpectedCount": 1,
       "DisplayName": "Mud Burrow"
     }
@@ -185,7 +185,12 @@
       "Name": "mausoleum_transition",
       "ExpectedCount": 1,
       "DisplayName": "Mausoleum of the Praetor"
-    }
+    },
+	{
+      "Name": "Metadata/Terrain/Woods/Graveyard/Gravestones/St_St_St_03.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Cemetary Chest"
+	}
   ],
   "C_G1_7": [
     {
@@ -207,7 +212,12 @@
       "Name": "mausoleum_transition",
       "ExpectedCount": 1,
       "DisplayName": "Mausoleum of the Praetor"
-    }
+    },
+	{
+      "Name": "Metadata/Terrain/Woods/Graveyard/Gravestones/St_St_St_03.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Cemetary Chest"
+	}
   ],
   "G1_8": [
     {
@@ -218,17 +228,17 @@
     {
       "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Transitions/Mausoleum_SecretEntrance_01.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Forgotten Riches"
+      "DisplayName": "Forgotten Riches Entrance"
     },
     {
       "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Transitions/Transition_Tomb_to_Graveyard_01.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Unknown 2"
+      "DisplayName": "Forgotten Riches Room"
     },
     {
       "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Feature/MausoleumBoss_ArenaFloor.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Draven"
+      "DisplayName": "Draven Boss"
     }
   ],
   "C_G1_8": [
@@ -240,17 +250,29 @@
     {
       "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Transitions/Mausoleum_SecretEntrance_01.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Forgotten Riches"
+      "DisplayName": "Forgotten Riches Entrance"
     },
     {
       "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Transitions/Transition_Tomb_to_Graveyard_01.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Unknown 2"
+      "DisplayName": "Forgotten Riches Room"
     },
     {
       "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Feature/MausoleumBoss_ArenaFloor.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Draven"
+      "DisplayName": "Draven Boss"
+    }
+  ],
+   "G1_9": [
+    {
+      "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Feature/Tomb_Landmark_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Haunted Ghost"
+    },
+	{
+      "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Feature/TombBoss_ArenaFloor.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Asinia Boss"
     }
   ],
   "G1_11": [
@@ -1240,7 +1262,7 @@
     {
       "Name": "waypoint",
       "ExpectedCount": 1,
-      "DisplayName": "waypoint"
+      "DisplayName": "Waypoint"
     }
   ],
   "G3_5": [
