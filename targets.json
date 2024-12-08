@@ -275,6 +275,18 @@
       "DisplayName": "Asinia Boss"
     }
   ],
+     "C_G1_9": [
+    {
+      "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Feature/Tomb_Landmark_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Haunted Ghost"
+    },
+	{
+      "Name": "Metadata/Terrain/Woods/GraveyardDungeons/Feature/TombBoss_ArenaFloor.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Asinia Boss"
+    }
+  ],
   "G1_11": [
     {
       "Name": "Metadata/Terrain/Woods/AreaTransitions/CliffRoad_Cnr_transition_01.tdt",
