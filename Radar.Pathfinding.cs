@@ -410,14 +410,22 @@ public partial class Radar
 
         // CACHE tile data for performance - read once instead of millions of times
         var tileData = GameController.Memory.ReadStdVector<TileStructure>(_terrainMetadata.TgtArray);
-       
-        
-        var rotations = new[] {
-        pattern,
-        RotatePattern90(pattern),
-        RotatePattern90(RotatePattern90(pattern)),
-        RotatePattern90(RotatePattern90(RotatePattern90(pattern)))
-    };
+
+
+        var rotations = new[]
+{
+    pattern,
+    MirrorPattern(pattern),
+
+    RotatePattern90(pattern),
+    MirrorPattern(RotatePattern90(pattern)),
+
+    RotatePattern90(RotatePattern90(pattern)),
+    MirrorPattern(RotatePattern90(RotatePattern90(pattern))),
+
+    RotatePattern90(RotatePattern90(RotatePattern90(pattern))),
+    MirrorPattern(RotatePattern90(RotatePattern90(RotatePattern90(pattern))))
+};
 
         // Calculate map dimensions in tiles
         int maxTileX = _areaDimensions.Value.X / TileToGridConversion;
@@ -474,24 +482,28 @@ public partial class Radar
                 if (patternCell == null || patternCell == "*")
                     continue;
 
+                // Check for negation prefix "!"
+                bool negate = patternCell.StartsWith("!");
+                var cellKey = negate ? patternCell.Substring(1) : patternCell;
+
                 // Resolve alias to full tile name
-                var requiredTile = aliases.ContainsKey(patternCell)
-                    ? aliases[patternCell]
-                    : patternCell;
+                var requiredTile = aliases.ContainsKey(cellKey)
+                    ? aliases[cellKey]
+                    : cellKey;
 
                 // Get actual tile at this position
                 var actualTile = GetTileAt(gridPos, tileData);
 
-               
-
-                // Check if tiles match
-                if (actualTile != requiredTile)
+                // Check if tiles match, respecting negation
+                bool matches = actualTile == requiredTile;
+                if (negate ? matches : !matches)
                     return false;
             }
         }
 
         return true;
     }
+
 
     /// <summary>
     /// Rotate pattern 90 degrees clockwise
@@ -512,6 +524,25 @@ public partial class Radar
         }
 
         return rotated;
+    }
+    private string[][] MirrorPattern(string[][] pattern)
+    {
+        int rows = pattern.Length;
+        int cols = pattern[0].Length;
+
+        var mirrored = new string[rows][];
+
+        for (int i = 0; i < rows; i++)
+        {
+            mirrored[i] = new string[cols];
+
+            for (int j = 0; j < cols; j++)
+            {
+                mirrored[i][j] = pattern[i][cols - 1 - j];
+            }
+        }
+
+        return mirrored;
     }
 
 
