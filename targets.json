@@ -1480,10 +1480,11 @@
 			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_01.tdt",
 		  },
 		  "ClusterPattern": [
-			["A","A", "A", "C"],
-			["A","A", "A", "C"],
-			["A","A", "A", "C"],
-			["B","B", "B", "*"]
+			["*","!A", "*", "*"],
+			["A", "A", "A", "C"],
+			["A", "A", "A", "C"],
+			["A", "A", "A", "C"],
+			["B", "B", "B", "*"]
 	 ]
 	},{
 		  "Name": "Rare Chest Helm3",
@@ -1579,32 +1580,32 @@
 			
 		  },
 		  "ClusterPattern": [
-			[ "A","A", "A","C","C","C"],
-			[ "A","A", "A","C","C","C"],
-			[ "A","A", "A","C","C","C"],
-			[ "B","B", "B","*","*","*"],
-			[ "B","B", "B","*","*","*"],
-			[ "B","B", "B","*","*","*"]
+			["!A","!A","!A", "!A","*","*","*"],
+			["!A","A","A", "A","C","C","C"],
+			["!A","A","A", "A","C","C","C"],
+			["!A","A","A", "A","C","C","C"],
+			["*","B","B", "B","*","*","*"],
+			["*","B","B", "B","*","*","*"],
+			["*","B","B", "B","*","*","*"]
 		  ]
 	},{
 		  "Name": "Rare Chest Helm9",
 		  "DisplayName": "Rare Chest Helm9",
 		  "TileAliases": {
 			"A": "Metadata/Terrain/forced_blank.tdt",
-			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_02.tdt",
-			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMM_01.tdt"
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt"
 			
 		  },
 		  "ClusterPattern": [
-			[ "C","C", "C","*","*","*"],
-			[ "C","C", "C","*","*","*"],
-			[ "C","C", "C","*","*","*"],
-			[ "A","A", "A","C","C","C"],
-			[ "A","A", "A","C","C","C"],
-			[ "A","A", "A","C","C","C"],
-			[ "B","B", "B","*","*","*"],
-			[ "B","B", "B","*","*","*"],
-			[ "B","B", "B","*","*","*"]
+			["*", "B","B", "B","*","*","*"],
+			["*", "B","B", "B","*","*","*"],
+			["*", "B","B", "B","*","*","*"],
+			["!A", "A","A", "A","B","B","B"],
+			["!A", "A","A", "A","B","B","B"],
+			["!A", "A","A", "A","B","B","B"],
+			["*", "B","B", "B","*","*","*"],
+			["*", "B","B", "B","*","*","*"],
+			["*", "B","B", "B","*","*","*"]
 
 		  ]
 	},{
@@ -1649,15 +1650,16 @@
 		  "DisplayName": "Rare Chest Helm12",
 		  "TileAliases": {
 			"A": "Metadata/Terrain/forced_blank.tdt",
-			"B": "Metadata/Terrain/Jungle/VaalExterior/Trees/BuildingWall_toJungle_St_01.tdt",
-			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMM_01.tdt"
+			"B": "Metadata/Terrain/Jungle/VaalExterior/Trees/BuildingWall_toJungle_St_0*.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/****_0*.tdt"
 			
 		  },
 		  "ClusterPattern": [
 
 			["B","B","B","A","A", "A","C","C", "C"],
 			["B","B","B","A","A", "A","C","C", "C"],
-			["B","B","B","A","A", "A","C","C", "C"]
+			["B","B","B","A","A", "A","C","C", "C"],
+			["*","*","*","*","!A","*","*","*","*",]
 
 		  ]
 	},{
@@ -1686,8 +1688,9 @@
 		  "DisplayName": "Rare Chest Helm14",
 		  "TileAliases": {
 			"A": "Metadata/Terrain/forced_blank.tdt",
-			"B": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMW_02.tdt",
-			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_01.tdt",
+			"B": "Metadata/Terrain/Jungle/VaalExterior/ChimeralWall/ChimeralBuildingWallRuin_**_**.tdt",
+		
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt",
 
 			"D": "Metadata/Terrain/Jungle/JungleExterior/JungleToWater_Chimeral/WaterM_toJungleM_St_01.tdt"
 			
@@ -1695,10 +1698,454 @@
 		  "ClusterPattern": [
 
 
-			["B","A","A", "A","C"],
-			["B","A","A", "A","C"],
-			["B","A","A", "A","C"],
-			["*","D","D", "D","*"]
+			[ "*","!B","!A","!A","*"],
+			["!A", "A", "A", "A","C"],
+			["!A", "A", "A", "A","C"],
+			["!A", "A", "A", "A","C"],
+			[ "*", "D", "D", "D","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm14A",
+		  "DisplayName": "Rare Chest Helm14A",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/StMM_0*.tdt",
+
+			"D": "Metadata/Terrain/Jungle/JungleExterior/JungleToWater_Chimeral/WaterM_toJungleM_St_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*","!A","!A","!A","*"],
+			["!A", "A", "A", "A","C"],
+			["!A", "A", "A", "A","C"],
+			["!A", "A", "A", "A","C"],
+			[ "*", "D", "D", "D","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm15",
+		  "DisplayName": "Rare Chest Helm15",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMW_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMW_02.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*" ,"!A","!A","!A","*","*","*"],
+			["!A", "A" ,"A", "A","C","C","C"],
+			["!A", "A" ,"A", "A","C","C","C"],
+			["!A", "A" ,"A", "A","C","C","C"],
+			["*" , "B" ,"B", "B","*","*","*"],
+			["*" , "B" ,"B", "B","*","*","*"],
+			["*" , "B" ,"B", "B","*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm16",
+		  "DisplayName": "Rare Chest Helm16",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StSM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_02.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","!A","!A","!A","*","*","*"],
+			["!A","A","A","A","C","C","C"],
+			["!A","A","A","A","C","C","C"],
+			["!A","A","A","A","C","C","C"],
+			["*","B","B","B","*","*","*"],
+			["*","B","B","B","*","*","*"],
+			["*","B","B","B","*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm17",
+		  "DisplayName": "Rare Chest Helm17",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_02.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","!A","!A","!A","*","*","*"],
+			["!A","A", "A", "A","B","B","B"],
+			["!A","A", "A", "A","B","B","B"],
+			["!A","A", "A", "A","B","B","B"],
+			["*" ,"B", "B", "B","*","*","*"],
+			["*" ,"B", "B", "B","*","*","*"],
+			["*" ,"B", "B", "B","*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm18",
+		  "DisplayName": "Rare Chest Helm18",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMM_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","!A","!A","!A","*","*","*"],
+			["!A","A", "A", "A","C","C","C"],
+			["!A","A", "A", "A","C","C","C"],
+			["!A","A", "A", "A","C","C","C"],
+			["*" ,"B", "B", "B","*","*","*"],
+			["*" ,"B", "B", "B","*","*","*"],
+			["*" ,"B", "B", "B","*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm19",
+		  "DisplayName": "Rare Chest Helm19",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StSM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_01.tdt",
+			"D": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMM_01.tdt",
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*" ,"*" ,"*"  ,"!A","!A","!A","*","*","*"],
+			["B","B","B","A", "A", "A","C","C","C"],
+			["B","B","B","A", "A", "A","C","C","C"],
+			["B","B","B","A", "A", "A","C","C","C"],
+			["*" ,"*" ,"*"  , "D", "D", "D","*","*","*"],
+			["*" ,"*" ,"*"  , "D", "D", "D","*","*","*"],
+			["*" ,"*" ,"*"  , "D", "D", "D","*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm20",
+		  "DisplayName": "Rare Chest Helm20",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/VaalExterior/Trees/BuildingWall_toJungle_St_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*", "*","!A","!A","!A" ,"*","*","*"],
+			["*","*","!A", "A", "A", "A" ,"B","B","B"],
+			["*","*","!A", "A", "A", "A" ,"B","B","B"],
+			["*","*","!A", "A", "A", "A" ,"B","B","B"],
+			["*","*", "*", "C", "C", "C" ,"*","*","*"],
+			["*","*", "*", "C", "C", "C" ,"*","*","*"],
+			["*","*", "*", "C", "C", "C" ,"*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm21",
+		  "DisplayName": "Rare Chest Helm21",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_0*.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_0*.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*", "*","!A","!A","!A" ,"*","*","*"],
+			["*","*","!A", "A", "A", "A" ,"B","B","B"],
+			["*","*","!A", "A", "A", "A" ,"B","B","B"],
+			["*","*","!A", "A", "A", "A" ,"B","B","B"],
+			["*","*", "*", "C", "C", "C" ,"*","*","*"],
+			["*","*", "*", "C", "C", "C" ,"*","*","*"],
+			["*","*", "*", "C", "C", "C" ,"*","*","*"]
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm22",
+		  "DisplayName": "Rare Chest Helm22",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMW_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*","*","!A","!A","!A" ,"*","*","*"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["*","*","*", "B", "B", "B" ,"*","*","*"],
+			["*","*","*", "B", "B", "B" ,"*","*","*"],
+			["*","*","*", "B", "B", "B" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm23",
+		  "DisplayName": "Rare Chest Helm23",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMM_02.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*","*","!A","!A","!A" ,"*","*","*"],
+			["C","C","C", "A", "A", "A" ,"C","C","C"],
+			["C","C","C", "A", "A", "A" ,"C","C","C"],
+			["C","C","C", "A", "A", "A" ,"C","C","C"],
+			["*","*","*","!A","!A","!A" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm24",
+		  "DisplayName": "Rare Chest Helm24",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMW_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_02.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*","*","!A","!A","!A" ,"*","*","*"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["*","*","*","!A","!A","!A" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm25",
+		  "DisplayName": "Rare Chest Helm25",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StSM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMM_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*","*","!A","!A","!A" ,"*","*","*"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["*","*","*","!A","!A","!A" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm26",
+		  "DisplayName": "Rare Chest Helm26",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/****_0*.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["*","*","*","!A","!A","!A" ,"*","*","*"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["C","C","C", "A", "A", "A" ,"B","B","B"],
+			["*","*","*","!A","!A","!A" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm26A",
+		  "DisplayName": "Rare Chest Helm26A",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/****_0*.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*", "*","!A", "*" ,"*","*","*"],
+			[ "*", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			[ "*", "A", "A", "A" ,"B","B","B"],
+			[ "*", "C", "C", "C" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm27",
+		  "DisplayName": "Rare Chest Helm27",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StSM_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*","!A","!A","!A" ,"*","*","*"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm28",
+		  "DisplayName": "Rare Chest Helm28",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/VaalExterior/ChimeralWall/ChimeralBuildingWallRuin_**_0*.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt",
+			"D": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvSM_CvSM_02.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "!D","!A","!A","!A","!D","*","*"],
+			["!A", "A", "A", "A" , "B","B","B"],
+			["!A", "A", "A", "A" , "B","B","B"],
+			["!A", "A", "A", "A" , "B","B","B"],
+			["!D", "C", "C", "C" ,"!D","*","*"],
+			[ "*", "C", "C", "C" , "*","*","*"],
+			[ "*", "C", "C", "C" , "*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm29",
+		  "DisplayName": "Rare Chest Helm29",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvSM_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*","!A","!A","!A" ,"*","*","*"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm30",
+		  "DisplayName": "Rare Chest Helm30",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/StMW_02.tdt",
+			"C": "Metadata/Terrain/Jungle/VaalExterior/Trees/BuildingWall_toJungle_St_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*","!A","!A","!A" ,"*","*","*"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm31",
+		  "DisplayName": "Rare Chest Helm31",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvMM_01.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/CvM*_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*","!A","!A","!A" ,"*","*","*"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"]
+
+
+		  ]
+	},{
+				
+		  "Name": "Rare Chest Helm32",
+		  "DisplayName": "Rare Chest Helm32",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/forced_blank.tdt",
+			"B": "Metadata/Terrain/Jungle/VaalExterior/TreesWater/WaterWallSwamp_****_**.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/Jungle_Chimeral/****_0*.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			[ "*","!A","!A","!A" ,"*","*","*"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			["!A", "A", "A", "A" ,"B","B","B"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"],
+			[ "*", "C", "C", "C" ,"*","*","*"]
+			
+
 
 		  ]
 	}

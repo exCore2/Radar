@@ -1,18 +1,19 @@
-﻿using System;
+﻿using ExileCore2.PoEMemory.Components;
+using ExileCore2.PoEMemory.MemoryObjects;
+using ExileCore2.Shared.Helpers;
+using GameOffsets2;
+using GameOffsets2.Native;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ExileCore2.PoEMemory.Components;
-using ExileCore2.PoEMemory.MemoryObjects;
-using ExileCore2.Shared.Helpers;
-using GameOffsets2;
-using GameOffsets2.Native;
-using Newtonsoft.Json;
 using Vector2 = System.Numerics.Vector2;
 
 namespace Radar;
@@ -459,11 +460,27 @@ public partial class Radar
        
         return matches;
     }
+    private readonly ConcurrentDictionary<string, Regex> _tilePatternCache = new();
+    private bool TileMatchesPattern(string actualTile, string requiredTile)
+    {
+        if (!requiredTile.Contains('*'))
+            return actualTile == requiredTile;
+
+        var regex = _tilePatternCache.GetOrAdd(requiredTile, pattern =>
+        {
+            var escaped = Regex.Escape(pattern).Replace(@"\*", ".*");
+            return new Regex($"^{escaped}$", RegexOptions.Compiled);
+        });
+
+        return actualTile != null && regex.IsMatch(actualTile);
+    }
     /// <summary>
     /// Check if pattern matches at specific position
     /// </summary>
+    /// 
     private bool PatternMatchesAt(Vector2i startPos, string[][] pattern, Dictionary<string, string> aliases, TileStructure[] tileData)
     {
+
         int patternHeight = pattern.Length;
         int patternWidth = pattern[0].Length;
 
@@ -495,7 +512,7 @@ public partial class Radar
                 var actualTile = GetTileAt(gridPos, tileData);
 
                 // Check if tiles match, respecting negation
-                bool matches = actualTile == requiredTile;
+                bool matches = TileMatchesPattern(actualTile, requiredTile);
                 if (negate ? matches : !matches)
                     return false;
             }
