@@ -1195,21 +1195,68 @@
 			["A", "A", "A"]
 		  ]
 	},
-	{
-		  "Name": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/OverlayCv_01_01.tdt",
-		  "DisplayName": "Magic Ring",
+{
+		  "Name": "Magic Ring2",
+		  "DisplayName": "Magic Ring2",
+		  
 		  "TileAliases": {
-			"A": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/OverlayCv_01_01.tdt",
-			"B": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/OverlayCv_01_03.tdt"
+			"D": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/Overlay**_**_**.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/**_**_**.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Feature/SandJungleBridgeSplit_**.tdt",
+			"A": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/OverlayEnd_**_**.tdt",
 
 		  },
 		  "ClusterPattern": [
-			["A", "A", "A", "B", "B",  "B"],
-			["A", "A", "A", "B", "B",  "B"],
-			["A", "A", "A", "B", "B",  "B"],
-			["A", "A", "A", "B", "B",  "B"],
-			["A", "A", "A", "B", "B",  "B"],
-			["A", "A", "A", "B", "B",  "B"]
+
+
+		
+			["A","A","A","A","A","A"],
+			["A","A","A","A","A","A"],
+			["A","A","A","A","A","A"],
+			["B","B","B","B","B","B"],
+			["B","B","B","B","B","B"],
+			["B","B","B","B","B","B"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"]
+
+
+
+		  ]
+	},{
+		  "Name": "Magic Ring3",
+		  "DisplayName": "Magic Ring3",
+		  
+		  "TileAliases": {
+			"D": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/Overlay**_**_**.tdt",
+			"B": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/**_**_**.tdt",
+			"C": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Feature/SandJungleBridgeSplit_**.tdt",
+			"A": "Metadata/Terrain/Jungle/JungleExterior/SandToWater/Overlays/OverlayEnd_**_**.tdt",
+
+		  },
+		  "ClusterPattern": [
+
+
+		
+			["!D","!D","!D","!D","!D","!D"],
+			["D","D","D","D","D","D"],
+			["D","D","D","D","D","D"],
+			["D","D","D","D","D","D"],
+			["D","D","D","D","D","D"],
+			["D","D","D","D","D","D"],
+			["D","D","D","D","D","D"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"],
+			["C","C","C","C","C","C"]
+
+
+
 
 		  ]
 	},
@@ -3079,7 +3126,27 @@
       "Name": "Metadata/Terrain/Gallows/Leagues/Abyss/AbyssHub/Tiles/AbyssPitFeature_01.tdt",
       "ExpectedCount": 1,
       "DisplayName": "Rare Fight"
-    }
+    },{
+				
+		  "Name": "Well of Souls",
+		  "DisplayName": "Well of Souls",
+		  "TileAliases": {
+			"A": "Metadata/Terrain/Gallows/Leagues/Abyss/AbyssHub/Tiles/ThickwallThinwall/StWW_End_01.tdt",
+			"B": "Metadata/Terrain/Islands/Tiles/CoralDungeon/ThickwallThinwall/StMW_End_01.tdt",
+			"C": "Metadata/Terrain/Islands/Tiles/CoralDungeon/ThickwallLedge/StWW_01.tdt"
+			
+		  },
+		  "ClusterPattern": [
+
+
+			["C","C"],
+			["A","B"],
+
+
+
+		  ]
+	}
+	
   ],
 
   "Sanctum*": [

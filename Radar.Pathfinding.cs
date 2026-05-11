@@ -396,6 +396,20 @@ public partial class Radar
     {
         return _processedTerrainData[tile.Y][tile.X] is 5 or 4;
     }
+    private List<Vector2i> DeduplicateNearbyMatches(List<Vector2i> matches, int minDistance)
+    {
+        var result = new List<Vector2i>();
+        foreach (var match in matches)
+        {
+            if (!result.Any(existing =>
+                Math.Abs(existing.X - match.X) < minDistance &&
+                Math.Abs(existing.Y - match.Y) < minDistance))
+            {
+                result.Add(match);
+            }
+        }
+        return result;
+    }
     private List<Vector2i> FindPatternMatches(TargetDescription target)
     {
         if (target.ClusterPattern == null || target.ClusterPattern.Length == 0)
@@ -457,7 +471,8 @@ public partial class Radar
             }
         }
 
-       
+        int dedupeDistance = Math.Max(pattern[0].Length, pattern.Length) * TileToGridConversion;
+        matches = DeduplicateNearbyMatches(matches, dedupeDistance);
         return matches;
     }
     private readonly ConcurrentDictionary<string, Regex> _tilePatternCache = new();
