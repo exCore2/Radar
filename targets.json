@@ -2336,9 +2336,41 @@
             "DisplayName": "Dungeon entrance down"
         },
         {
-            "Name": "Metadata/Terrain/Islands/Tiles/Prison/Prison_Forced_Blank_01.tdt",
-            "ExpectedCount": 2,
-            "DisplayName": "Strongbox or monster gauntlet"
+            "Name": "Strongbox",
+            "DisplayName": "Strongbox",
+            "TileAliases": {
+                "A": "Metadata/Terrain/Islands/Tiles/Prison/Prison_Forced_Blank_**.tdt"
+            },
+            "ClusterPattern": [
+        ["A","!A","A","!A","A","!A"],
+        ["A", "A","A", "A","A", "A"],
+        ["A","!A","A","!A","A","!A"]
+
+    ]
+        },{
+            "Name": "Monster Gauntlet",
+            "DisplayName": "Monster Gauntlet",
+            "TileAliases": {
+                "A": "Metadata/Terrain/Islands/Tiles/Prison/Prison_Forced_Blank_**.tdt"
+            },
+            "ClusterPattern": [
+        ["A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A"]
+
+    ]
+        },{
+            "Name": "Monster Gauntlet2",
+            "DisplayName": "Monster Gauntlet2",
+            "TileAliases": {
+                "A": "Metadata/Terrain/Islands/Tiles/Prison/Prison_Forced_Blank_**.tdt"
+            },
+            "ClusterPattern": [
+        ["A", "A", "A"],
+        ["A", "A", "A"],
+        ["A", "A", "A"]
+
+    ]
         }
     ],
     "G4_5_2": [
