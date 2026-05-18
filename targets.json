@@ -4,6 +4,11 @@
             "Name": "EncampmentFront",
             "ExpectedCount": 1,
             "DisplayName": "Clearfell Encampment"
+        },
+        {
+            "Name": "Metadata/Terrain/Woods/Lumbermill/EncampmentFront_01.tdt",
+            "ExpectedCount": 1,
+            "DisplayName": "Clearfell Encampment"
         }
     ],
     "G1_2": [
@@ -1594,15 +1599,15 @@
             "DisplayName": "Rare Chest Helm14A",
             "TileAliases": {
                 "A": "Metadata/Terrain/forced_blank.tdt",
-                "C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/StMM_0*.tdt",
-                "D": "Metadata/Terrain/Jungle/JungleExterior/JungleToWater_Chimeral/WaterM_toJungleM_St_01.tdt"
+                "B": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/StMM_0*.tdt",
+                "C": "Metadata/Terrain/Jungle/JungleExterior/JungleToWater_Chimeral/WaterM_toJungleM_St_01.tdt"
             },
             "ClusterPattern": [
         [ "*", "!A", "!A", "!A", "*"],
-        ["!A",  "A",  "A",  "A", "C"],
-        ["!A",  "A",  "A",  "A", "C"],
-        ["!A",  "A",  "A",  "A", "C"],
-        [ "*",  "D",  "D",  "D", "*"]
+        ["!A",  "A",  "A",  "A", "B"],
+        ["!A",  "A",  "A",  "A", "B"],
+        ["!A",  "A",  "A",  "A", "B"],
+        [ "*",  "C",  "C",  "C", "*"]
     ]
         },
         {
@@ -1754,13 +1759,13 @@
             "DisplayName": "Rare Chest Helm23",
             "TileAliases": {
                 "A": "Metadata/Terrain/forced_blank.tdt",
-                "C": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMM_02.tdt"
+                "B": "Metadata/Terrain/Jungle/JungleExterior/Water_Chimeral/CvMM_02.tdt"
             },
             "ClusterPattern": [
         ["*", "*", "*", "!A", "!A", "!A", "*", "*", "*"],
-        ["C", "C", "C",  "A",  "A",  "A", "C", "C", "C"],
-        ["C", "C", "C",  "A",  "A",  "A", "C", "C", "C"],
-        ["C", "C", "C",  "A",  "A",  "A", "C", "C", "C"],
+        ["B", "B", "B",  "A",  "A",  "A", "B", "B", "B"],
+        ["B", "B", "B",  "A",  "A",  "A", "B", "B", "B"],
+        ["B", "B", "B",  "A",  "A",  "A", "B", "B", "B"],
         ["*", "*", "*", "!A", "!A", "!A", "*", "*", "*"]
     ]
         },
@@ -2342,12 +2347,12 @@
                 "A": "Metadata/Terrain/Islands/Tiles/Prison/Prison_Forced_Blank_**.tdt"
             },
             "ClusterPattern": [
-        ["A","!A","A","!A","A","!A"],
-        ["A", "A","A", "A","A", "A"],
-        ["A","!A","A","!A","A","!A"]
-
+        ["A", "!A", "A", "!A", "A", "!A"],
+        ["A",  "A", "A",  "A", "A",  "A"],
+        ["A", "!A", "A", "!A", "A", "!A"]
     ]
-        },{
+        },
+        {
             "Name": "Monster Gauntlet",
             "DisplayName": "Monster Gauntlet",
             "TileAliases": {
@@ -2357,9 +2362,9 @@
         ["A", "A", "A", "A", "A"],
         ["A", "A", "A", "A", "A"],
         ["A", "A", "A", "A", "A"]
-
     ]
-        },{
+        },
+        {
             "Name": "Monster Gauntlet2",
             "DisplayName": "Monster Gauntlet2",
             "TileAliases": {
@@ -2369,7 +2374,6 @@
         ["A", "A", "A"],
         ["A", "A", "A"],
         ["A", "A", "A"]
-
     ]
         }
     ],
