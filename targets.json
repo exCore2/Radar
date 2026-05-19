@@ -133,6 +133,12 @@
       "Name": "Metadata/Terrain/Woods/AreaTransitions/redvale_transition_02_redvale.tdt",
       "ExpectedCount": 1,
       "DisplayName": "The Grelwood"
+    },
+    {
+      "Name": "*",
+      "Rooms": [ "*Encounter*" ],
+      "ExpectedCount": 3,
+      "DisplayName": "Rust"
     }
   ],
   "G1_6": [
