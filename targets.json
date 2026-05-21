@@ -322,6 +322,21 @@
         ["A", "A", "A", "A", "A", "A"],
         ["A", "A", "A", "A", "A", "A"]
     ]
+        },        {
+            "Name": "Rust 17",
+            "DisplayName": "Rust 17",
+            "TileAliases": {
+                "A": "Metadata/Terrain/Woods/Features_RedvaleRiver/curve6.tdt"
+            },
+            "ClusterPattern": [
+        ["A", "A", "A", "A", "A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A", "A", "A", "A", "A"],
+        ["A", "A", "A", "A", "A", "A", "A", "A", "A"]
+  
+    ]
         },
         {
             "Name": "Metadata/Terrain/Woods/AreaTransitions/redvale_transition_02_redvale.tdt",
