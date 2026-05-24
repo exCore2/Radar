@@ -28,22 +28,23 @@
       "ExpectedCount": 1,
       "DisplayName": "Mud Burrow (normally skip this)",
       "Alternatives": [
-      {
-        "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_in.tdt",
-        "ExpectedCount": 1
-      },
-      {
-        "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_out.tdt",
-        "ExpectedCount": 1
-      },
-      {
-        "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeWoods_in.tdt",
-        "ExpectedCount": 1
-      },
-      {
-        "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeWoods_out.tdt",
-        "ExpectedCount": 1
-      }]
+        {
+          "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_in.tdt",
+          "ExpectedCount": 1
+        },
+        {
+          "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeSlash_out.tdt",
+          "ExpectedCount": 1
+        },
+        {
+          "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeWoods_in.tdt",
+          "ExpectedCount": 1
+        },
+        {
+          "Name": "Metadata/Terrain/Woods/AreaTransitions/FallenTreeWoods_out.tdt",
+          "ExpectedCount": 1
+        }
+      ]
     },
     {
       "Name": "*",
@@ -82,7 +83,8 @@
         {
           "Name": "hagwitch",
           "ExpectedCount": 1
-        }]
+        }
+      ]
     },
     {
       "Name": "special",
@@ -124,7 +126,7 @@
       "Rooms": [ "*witchhut*" ],
       "ExpectedCount": 1,
       "DisplayName": "Areagne's Hut (T1 Support Gem and Flasks)",
-      "Alternatives": [ 
+      "Alternatives": [
         {
           "Name": "Metadata/Terrain/Woods/OldForestWoods/Feature/BurnTheWitch_01.tdt",
           "ExpectedCount": 1
@@ -132,7 +134,8 @@
         {
           "Name": "BurnTheWitch",
           "ExpectedCount": 1
-        }]
+        }
+      ]
     },
     {
       "Name": "Metadata/Terrain/Woods/OldForestWoods/Feature/PlantBoss_01.tdt",
@@ -188,14 +191,36 @@
       "DisplayName": "The Grim Tangle"
     },
     {
-      "Name": "Metadata/Terrain/Woods/Graveyard/Feature/mausoleum_01.tdt",
+      "Name": "*",
+      "Rooms": [ "*entrance_mausoleum*" ],
       "ExpectedCount": 1,
-      "DisplayName": "Mausoleum of the Praetor"
+      "DisplayName": "Mausoleum of the Praetor",
+      "Alternatives": [
+        {
+          "Name": "Metadata/Terrain/Woods/Graveyard/Feature/mausoleum_01.tdt",
+          "ExpectedCount": 1
+        },
+        {
+          "Name": "Metadata/Terrain/Woods/Graveyard/Feature/mausoleum_02.tdt",
+          "ExpectedCount": 1
+        }
+      ]
     },
     {
-      "Name": "Metadata/Terrain/Woods/Graveyard/Feature/tomb_01.tdt",
+      "Name": "*",
+      "Rooms": [ "*entrance_tomb*" ],
       "ExpectedCount": 1,
-      "DisplayName": "Tomb of the Consort"
+      "DisplayName": "Tomb of the Consort",
+      "Alternatives": [
+        {
+          "Name": "Metadata/Terrain/Woods/Graveyard/Feature/tomb_01.tdt",
+          "ExpectedCount": 1
+        },
+        {
+          "Name": "Metadata/Terrain/Woods/Graveyard/Feature/tomb_02.tdt",
+          "ExpectedCount": 1
+        }
+      ]
     }
   ],
   "G1_8": [
@@ -248,8 +273,9 @@
         {
           "Name": "GrassHole",
           "ExpectedCount": 2
-        }]
-    },    
+        }
+      ]
+    },
     {
       "Name": "Metadata/Terrain/Woods/AreaTransitions/CanopyRoadTransition_01.tdt",
       "ExpectedCount": 1,
@@ -620,7 +646,7 @@
       "Rooms": [ "*unique_0*" ],
       "ExpectedCount": 1,
       "DisplayName": "Random Rune"
-    },    
+    },
     {
       "Name": "Metadata/Terrain/Desert/CaveTitans/Features/Staircase_Entrance_01.tdt",
       "ExpectedCount": 1,
@@ -633,6 +659,18 @@
     }
   ],
   "G2_8": [
+    {
+      "Name": "*",
+      "Rooms": [ "*overlay_superman*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "Fallen Dekhara (+2 Passive)"
+    },
+    {
+      "Name": "*",
+      "Rooms": [ "*unique_0*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "Artificers Orb"
+    },
     {
       "Name": "Metadata/Chests/SpireCorpseChest",
       "ExpectedCount": 1,
@@ -872,7 +910,8 @@
         {
           "Name": "Metadata/Terrain/Jungle/JungleExterior/RuinedThinwall/JungleDepths_Cv_FootwallEnd_01.tdt",
           "ExpectedCount": 1
-        }]
+        }
+      ]
     },
     {
       "Name": "Metadata/Terrain/Jungle/JungleExterior/RuinedThinwall/RuinedThinwall_Tri_06.tdt",
@@ -900,7 +939,8 @@
         {
           "Name": "Metadata/Terrain/Jungle/JungleExterior/Feature/StMW_KuamShrine_01.tdt",
           "ExpectedCount": 1
-        }]
+        }
+      ]
     }
   ],
   "G3_4": [
@@ -996,6 +1036,12 @@
     }
   ],
   "G3_7": [
+    {
+      "Name": "*",
+      "Rooms": [ "*burningman*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "Fire Rarity buff (good xp to reset)"
+    },
     {
       "Name": "Metadata/Terrain/Jungle/JungleExterior/Bog/AreaTransition/EntranceBog_01.tdt",
       "ExpectedCount": 1,
@@ -1138,11 +1184,18 @@
         {
           "Name": "Metadata/Terrain/Jungle/Aggorat/Features/AggoratArena_Past_01.tdt",
           "ExpectedCount": 1
-        }]
+        }
+      ]
     },
     {
       "Name": "*",
       "Rooms": [ "*idol_end_02*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "Idol"
+    },
+    {
+      "Name": "*",
+      "Rooms": [ "*idol_end_03*" ],
       "ExpectedCount": 1,
       "DisplayName": "Idol"
     },
@@ -1353,6 +1406,12 @@
   ],
   "G4_7": [
     {
+      "Name": "*",
+      "Rooms": [ "*karui_corpse*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "Rare Mace"
+    },
+    {
       "Name": "Metadata/Terrain/Islands/Tiles/Island/ShrikeIsland/ShrikeIslandArena.tdt",
       "ExpectedCount": 1,
       "DisplayName": "Arena"
@@ -1424,7 +1483,17 @@
     {
       "Name": "Metadata/Terrain/Islands/Tiles/TwilightIsland/Feature/TwilightLighthouse.tdt",
       "ExpectedCount": 1,
-      "DisplayName": "Bell - Currency"
+      "DisplayName": "Bell - Exalted"
+    },
+    {
+      "Name": "Metadata/Terrain/Islands/Tiles/TwilightIsland/Feature/TwilightOverlook.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Bell - Exalted"
+    },
+    {
+      "Name": "Metadata/Terrain/Islands/Tiles/TwilightIsland/Feature/bell_feature_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Bell - Regal"
     }
   ],
   "G4_10": [
@@ -1469,6 +1538,12 @@
     }
   ],
   "P1_1": [
+    {
+      "Name": "*",
+      "Rooms": [ "*feature_una*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "Skill Gem Level 13"
+    },
     {
       "Name": "*",
       "Rooms": [ "*shrine*" ],
@@ -1524,43 +1599,43 @@
   ],
   "P1_3": [
     {
-        "Name": "Metadata/Terrain/interlude/part1/p1_3/holten_transition_01.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Holten"
+      "Name": "Metadata/Terrain/interlude/part1/p1_3/holten_transition_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Holten"
     }
   ],
   "P1_4": [
     {
-        "Name": "Metadata/Terrain/interlude/part1/p1_4/blackwood_transition_01.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Blackwood"
+      "Name": "Metadata/Terrain/interlude/part1/p1_4/blackwood_transition_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Blackwood"
     },
     {
-        "Name": "Metadata/Terrain/interlude/part1/p1_4/holtondocktransition.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Soul Ferryman - Sells runes"
+      "Name": "Metadata/Terrain/interlude/part1/p1_4/holtondocktransition.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Soul Ferryman - Sells runes"
     },
     {
-        "Name": "Metadata/Terrain/interlude/part1/p1_4/holton_estate_transition_01.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Holton Estate"
+      "Name": "Metadata/Terrain/interlude/part1/p1_4/holton_estate_transition_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Holton Estate"
     },
     {
-        "Name": "Metadata/Terrain/Interlude/Part1/P1_4/Chaple_01.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Bosses (no quest or reward)"
+      "Name": "Metadata/Terrain/Interlude/Part1/P1_4/Chaple_01.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Bosses (no quest or reward)"
     },
-      {
-        "Name": "Metadata/Terrain/Interlude/Part1/P1_4/Prison_entrance.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Woven"
+    {
+      "Name": "Metadata/Terrain/Interlude/Part1/P1_4/Prison_entrance.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Woven"
     }
   ],
   "P1_5": [
     {
-        "Name": "Metadata/Terrain/Interlude/Part1/P1_5/Holten_Prison_Bossroom.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Boss"
+      "Name": "Metadata/Terrain/Interlude/Part1/P1_5/Holten_Prison_Bossroom.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Boss"
     }
   ],
   "P1_6": [
@@ -1575,7 +1650,7 @@
       "Rooms": [ "*landmark_treasure_upstairs*" ],
       "ExpectedCount": 1,
       "DisplayName": "2 Rare chests"
-    },   
+    },
     {
       "Name": "Metadata/Terrain/Maps/Derelict/Tiles/StairsUp_01.tdt",
       "ExpectedCount": 1,
@@ -1672,9 +1747,9 @@
   ],
   "P2_4": [
     {
-        "Name": "Metadata/Terrain/interlude/part2/p2_4/saitwaste_entrance_transition.tdt",
-        "ExpectedCount": 3,
-        "DisplayName": "Saitwaste Entrance"
+      "Name": "Metadata/Terrain/interlude/part2/p2_4/saitwaste_entrance_transition.tdt",
+      "ExpectedCount": 3,
+      "DisplayName": "Saitwaste Entrance"
     }
   ],
   "P2_5": [
@@ -1747,10 +1822,10 @@
     }
   ],
   "P3_2": [
-      {
-        "Name": "Metadata/Terrain/interlude/part3/p3_2/jungle_transition.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Ashen Forest"
+    {
+      "Name": "Metadata/Terrain/interlude/part3/p3_2/jungle_transition.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Ashen Forest"
     },
     {
       "Name": "Metadata/Terrain/Interlude/Part3/P3_2/KriarVillage_Bossroom.tdt",
@@ -1784,29 +1859,29 @@
     }
   ],
   "P3_5": [
-      {
-        "Name": "Metadata/Terrain/Interlude/Part3/P3_5/Ravine_Exit_Transition.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Ravine"
+    {
+      "Name": "Metadata/Terrain/Interlude/Part3/P3_5/Ravine_Exit_Transition.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Ravine"
     },
     {
-        "Name": "Metadata/Terrain/Interlude/Part3/P3_5/Medition_Ridge.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Guaranteed unique"
+      "Name": "Metadata/Terrain/Interlude/Part3/P3_5/Medition_Ridge.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Guaranteed unique"
     }
   ],
   "P3_6": [
-      {
-        "Name": "Metadata/Terrain/Interlude/Part3/P3_6/Ravine_Bossroom.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Boss"
+    {
+      "Name": "Metadata/Terrain/Interlude/Part3/P3_6/Ravine_Bossroom.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Boss"
     }
   ],
   "P3_7": [
-      {
-        "Name": "Metadata/Terrain/Interlude/Part3/P3_7/BloodVault_Bossroom.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Boss"
+    {
+      "Name": "Metadata/Terrain/Interlude/Part3/P3_7/BloodVault_Bossroom.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Boss"
     }
   ],
   "MapAlpineRidge": [
@@ -1914,39 +1989,46 @@
   ],
   "*": [
     {
-        "Name": "Metadata/Terrain/Leagues/Incursion/Tiles/Features/Waygates/WaygateDevice*.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Temple"
+      "Name": "*",
+      "Rooms": [ "*mission*" ],
+      "ExpectedCount": 1,
+      "DisplayName": "League Mechanic"
+
     },
     {
-        "Name": "Metadata/Terrain/islands/tiles/bloodfever/wharewall/alleyway_to_smallalley_ccst_01.tdt",
-        "ExpectedCount": 3,
-        "DisplayName": "Smallalley Ccst"
+      "Name": "Metadata/Terrain/Leagues/Incursion/Tiles/Features/Waygates/WaygateDevice*.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Temple"
     },
     {
-        "Name": "Metadata/Terrain/islands/tiles/coraldungeon/features/area_transition_stww_01.tdt",
-        "ExpectedCount": 3,
-        "DisplayName": "Transition"
+      "Name": "Metadata/Terrain/islands/tiles/bloodfever/wharewall/alleyway_to_smallalley_ccst_01.tdt",
+      "ExpectedCount": 3,
+      "DisplayName": "Smallalley Ccst"
     },
     {
-        "Name": "Metadata/Terrain/islands/tiles/island/oceanledge/oceanledge_to_lowerledge_x_karui_01.tdt",
-        "ExpectedCount": 3,
-        "DisplayName": "Lowerledge X Karui"
+      "Name": "Metadata/Terrain/islands/tiles/coraldungeon/features/area_transition_stww_01.tdt",
+      "ExpectedCount": 3,
+      "DisplayName": "Transition"
     },
     {
-        "Name": "Metadata/Terrain/islands/tiles/kalguurship/kalguurship_town_01.tdt",
-        "ExpectedCount": 3,
-        "DisplayName": "Kalguur town?"
+      "Name": "Metadata/Terrain/islands/tiles/island/oceanledge/oceanledge_to_lowerledge_x_karui_01.tdt",
+      "ExpectedCount": 3,
+      "DisplayName": "Lowerledge X Karui"
     },
     {
-        "Name": "Metadata/Terrain/islands/tiles/kalguurship/kalguurship_town_01_ghost.tdt",
-        "ExpectedCount": 1,
-        "DisplayName": "Boat"
+      "Name": "Metadata/Terrain/islands/tiles/kalguurship/kalguurship_town_01.tdt",
+      "ExpectedCount": 3,
+      "DisplayName": "Kalguur town?"
     },
     {
-        "Name": "Metadata/Terrain/islands/tiles/kalguurship/kalguurship_town_02.tdt",
-        "ExpectedCount": 3,
-        "DisplayName": "Kalguur town?"
+      "Name": "Metadata/Terrain/islands/tiles/kalguurship/kalguurship_town_01_ghost.tdt",
+      "ExpectedCount": 1,
+      "DisplayName": "Boat"
+    },
+    {
+      "Name": "Metadata/Terrain/islands/tiles/kalguurship/kalguurship_town_02.tdt",
+      "ExpectedCount": 3,
+      "DisplayName": "Kalguur town?"
     },
     {
       "Name": "Metadata/Terrain/Woods/Woods/AzmeriLeague/Features/arenaTransition_01.tdt",
