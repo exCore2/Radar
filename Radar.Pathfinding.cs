@@ -24,8 +24,16 @@ public partial class Radar
 
     private void LoadTargets()
     {
-        var fileText = File.ReadAllText(Path.Combine(DirectoryFullName, "targets.json"));
-        _targetDescriptions = JsonConvert.DeserializeObject<ConcurrentDictionary<string, List<TargetDescription>>>(fileText);
+        var path = Path.Combine(DirectoryFullName, "targets.json");
+        if (!File.Exists(path))
+        {
+            _targetDescriptions = new ConcurrentDictionary<string, List<TargetDescription>>();
+            return;
+        }
+
+        var fileText = File.ReadAllText(path);
+        _targetDescriptions = JsonConvert.DeserializeObject<ConcurrentDictionary<string, List<TargetDescription>>>(fileText)
+                              ?? new ConcurrentDictionary<string, List<TargetDescription>>();
     }
 
     private void RestartPathFinding()
@@ -229,7 +237,7 @@ public partial class Radar
 
     private bool IsDescriptionInArea(string descriptionAreaPattern)
     {
-        return GameController.Area.CurrentArea.Area.RawName.Like(descriptionAreaPattern);
+        return GameController.Area.CurrentArea.Area.Id.Like(descriptionAreaPattern);
     }
 
     private IEnumerable<TargetDescription> GetTargetDescriptionsInArea()

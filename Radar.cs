@@ -47,6 +47,7 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     private ExileCore2.Shared.RectangleF _rect;
     private ImDrawListPtr _backGroundWindowPtr;
     private ConcurrentDictionary<Vector2, RouteDescription> _routes = new();
+    private bool _settingsHooksAttached;
 
     public override bool Initialise()
     {
@@ -61,7 +62,6 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
             (bool includeRoutes) => GetMapSvgString(includeRoutes));
 
         Input.RegisterKey(Settings.InstanceDumpSettings.ManualDumpHotkey.Value);
-        Settings.InstanceDumpSettings.ManualDumpHotkey.OnValueChanged += () => { Input.RegisterKey(Settings.InstanceDumpSettings.ManualDumpHotkey.Value); };
         Settings.InstanceDumpSettings.ManualDumpButton.OnPressed += RunDump;
         return true;
     }
@@ -69,6 +69,8 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     public override void AreaChange(AreaInstance area)
     {
         StopPathFinding();
+        if (!Settings.Enable)
+            return;
         if (GameController.Game.IsInGameState || GameController.Game.IsEscapeState)
         {
             _targetDescriptionsInArea = GetTargetDescriptionsInArea().DistinctBy(x => x.EqualityId).ToDictionary(x => x.EqualityId);
@@ -112,7 +114,8 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
 
     public override void DrawSettings()
     {
-        Settings.PathfindingSettings.CurrentZoneName.Value = GameController.Area.CurrentArea.Area.RawName;
+        try { Settings.PathfindingSettings.CurrentZoneName.Value = GameController.Area.CurrentArea.Area.Id; }
+        catch { /* area is not available while the settings panel is open */ }
         base.DrawSettings();
     }
 
@@ -132,26 +135,92 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     public override void OnLoad()
     {
         LoadTargets();
-        Settings.Reload.OnPressed = () =>
+        AttachSettingsHooks();
+    }
+
+    private void AttachSettingsHooks()
+    {
+        if (_settingsHooksAttached) return;
+        Settings.Reload.OnPressed += ReloadTargets;
+        Settings.InstanceDumpSettings.ManualDumpHotkey.OnValueChanged += OnManualDumpHotkeyChanged;
+        Settings.MaximumPathCount.OnValueChanged += OnMaximumPathCountChanged;
+        Settings.Enable.OnValueChanged += OnEnableChanged;
+        Settings.TerrainColor.OnValueChanged += OnTerrainColorChanged;
+        Settings.Debug.DrawHeightMap.OnValueChanged += OnBoolMapRenderSettingChanged;
+        Settings.Debug.StandardEdgeSettings.SkipEdgeDetector.OnValueChanged += OnBoolMapRenderSettingChanged;
+        Settings.Debug.StandardEdgeSettings.SkipNeighborFill.OnValueChanged += OnBoolMapRenderSettingChanged;
+        Settings.Debug.StandardEdgeSettings.SkipRecoloring.OnValueChanged += OnBoolMapRenderSettingChanged;
+        Settings.Debug.DisableHeightAdjust.OnValueChanged += OnBoolMapRenderSettingChanged;
+        Settings.MaximumMapTextureDimension.OnValueChanged += OnMaximumMapTextureDimensionChanged;
+        Settings.Debug.AlternativeEdgeMethod.OnValueChanged += OnBoolMapRenderSettingChanged;
+        Settings.Debug.AlternativeEdgeSettings.OutlineBlurSigma.OnValueChanged += OnFloatMapRenderSettingChanged;
+        Settings.Debug.AlternativeEdgeSettings.OutlineTransitionThreshold.OnValueChanged += OnFloatMapRenderSettingChanged;
+        Settings.Debug.AlternativeEdgeSettings.OutlineFeatherWidth.OnValueChanged += OnFloatMapRenderSettingChanged;
+        _settingsHooksAttached = true;
+    }
+
+    private void ReloadTargets()
+    {
+        try
         {
-            Task.Run(() =>
-            {
-                LoadTargets();
-                AreaChange(GameController.Area.CurrentArea);
-            });
-        };
-        Settings.MaximumPathCount.OnValueChanged += (_, _) => { Task.Run(RestartPathFinding); };
-        Settings.TerrainColor.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.DrawHeightMap.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.StandardEdgeSettings.SkipEdgeDetector.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.StandardEdgeSettings.SkipNeighborFill.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.StandardEdgeSettings.SkipRecoloring.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.DisableHeightAdjust.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.MaximumMapTextureDimension.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.AlternativeEdgeMethod.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.AlternativeEdgeSettings.OutlineBlurSigma.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.AlternativeEdgeSettings.OutlineTransitionThreshold.OnValueChanged += (_, _) => { GenerateMapTexture(); };
-        Settings.Debug.AlternativeEdgeSettings.OutlineFeatherWidth.OnValueChanged += (_, _) => { GenerateMapTexture(); };
+            LoadTargets();
+            if (GameController?.Area?.CurrentArea is { } area)
+                AreaChange(area);
+        }
+        catch (Exception ex) { DebugWindow.LogError($"Radar reload failed: {ex}"); }
+    }
+
+    private void OnManualDumpHotkeyChanged() => Input.RegisterKey(Settings.InstanceDumpSettings.ManualDumpHotkey.Value);
+    private void OnMaximumPathCountChanged(object _, int __) => Task.Run(RestartPathFinding);
+    private void OnTerrainColorChanged(object _, Color __) => GenerateMapTexture();
+    private void OnBoolMapRenderSettingChanged(object _, bool __) => GenerateMapTexture();
+    private void OnMaximumMapTextureDimensionChanged(object _, int __) => GenerateMapTexture();
+    private void OnFloatMapRenderSettingChanged(object _, float __) => GenerateMapTexture();
+
+    private void OnEnableChanged(object _, bool enabled)
+    {
+        if (enabled)
+        {
+            if (GameController?.Area?.CurrentArea is { } area) AreaChange(area);
+            return;
+        }
+        StopPathFinding();
+    }
+
+    public override void OnPluginDestroyForHotReload()
+    {
+        DetachSettingsHooks();
+        StopPathFinding();
+        base.OnPluginDestroyForHotReload();
+    }
+
+    public override void Dispose()
+    {
+        DetachSettingsHooks();
+        StopPathFinding();
+        base.Dispose();
+    }
+
+    private void DetachSettingsHooks()
+    {
+        if (!_settingsHooksAttached) return;
+        Settings.Reload.OnPressed -= ReloadTargets;
+        Settings.InstanceDumpSettings.ManualDumpHotkey.OnValueChanged -= OnManualDumpHotkeyChanged;
+        Settings.InstanceDumpSettings.ManualDumpButton.OnPressed -= RunDump;
+        Settings.MaximumPathCount.OnValueChanged -= OnMaximumPathCountChanged;
+        Settings.Enable.OnValueChanged -= OnEnableChanged;
+        Settings.TerrainColor.OnValueChanged -= OnTerrainColorChanged;
+        Settings.Debug.DrawHeightMap.OnValueChanged -= OnBoolMapRenderSettingChanged;
+        Settings.Debug.StandardEdgeSettings.SkipEdgeDetector.OnValueChanged -= OnBoolMapRenderSettingChanged;
+        Settings.Debug.StandardEdgeSettings.SkipNeighborFill.OnValueChanged -= OnBoolMapRenderSettingChanged;
+        Settings.Debug.StandardEdgeSettings.SkipRecoloring.OnValueChanged -= OnBoolMapRenderSettingChanged;
+        Settings.Debug.DisableHeightAdjust.OnValueChanged -= OnBoolMapRenderSettingChanged;
+        Settings.MaximumMapTextureDimension.OnValueChanged -= OnMaximumMapTextureDimensionChanged;
+        Settings.Debug.AlternativeEdgeMethod.OnValueChanged -= OnBoolMapRenderSettingChanged;
+        Settings.Debug.AlternativeEdgeSettings.OutlineBlurSigma.OnValueChanged -= OnFloatMapRenderSettingChanged;
+        Settings.Debug.AlternativeEdgeSettings.OutlineTransitionThreshold.OnValueChanged -= OnFloatMapRenderSettingChanged;
+        Settings.Debug.AlternativeEdgeSettings.OutlineFeatherWidth.OnValueChanged -= OnFloatMapRenderSettingChanged;
+        _settingsHooksAttached = false;
     }
 
     public override void EntityAdded(Entity entity)
@@ -196,6 +265,9 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
 
     public override void Render()
     {
+        if (!Settings.Enable)
+            return;
+
         if (Settings.InstanceDumpSettings.ManualDumpHotkey.PressedOnce())
         {
             RunDump();
@@ -262,7 +334,7 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     {
         Task.Run(() =>
         {
-            DumpInstanceData($@"{DirectoryFullName}\instance_dumps\{GameController.Area.CurrentArea.Area.RawName}_{SanitizeAreaName(GameController.Area.CurrentArea.Area.Name)}");
+            DumpInstanceData($@"{DirectoryFullName}\instance_dumps\{GameController.Area.CurrentArea.Area.Id}_{SanitizeAreaName(GameController.Area.CurrentArea.Area.Name)}");
         });
     }
 
@@ -308,6 +380,8 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
 
     private void DrawWorldPaths(SubMap largeMap)
     {
+        if (largeMap == null || _heightData == null)
+            return;
         if (Settings.PathfindingSettings.WorldPathSettings.ShowPathsToTargets &&
             (!largeMap.IsVisible || !Settings.PathfindingSettings.WorldPathSettings.ShowPathsToTargetsOnlyWithClosedMap))
         {
@@ -316,7 +390,9 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
             if (playerRender == null)
                 return;
             var initPos = GameController.IngameState.Camera.WorldToScreen(playerRender.Pos with { Z = playerRender.UnclampedHeight });
+            if (!IsFinite(initPos)) return;
             foreach (var (route, offsetAmount) in _routes.Values
+                         .Where(x => x?.Path is { Count: > 0 })
                          .GroupBy(x => x.Path.Count < 2 ? 0 : (x.Path[1] - x.Path[0]) switch { var diff => Math.Atan2(diff.Y, diff.X) })
                          .SelectMany(group => group.Select((route, i) => (route, i - group.Count() / 2.0f + 0.5f))))
             {
@@ -325,10 +401,16 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
                 var i = 0;
                 foreach (var elem in route.Path)
                 {
+                    if (!InBounds(elem, _heightData) || !float.IsFinite(_heightData[elem.Y][elem.X]))
+                    {
+                        p0WithOffset = p0;
+                        continue;
+                    }
                     var p1 = GameController.IngameState.Camera.WorldToScreen(
                         new Vector3(elem.X * GridToWorldMultiplier, elem.Y * GridToWorldMultiplier, _heightData[elem.Y][elem.X]));
+                    if (!IsFinite(p1)) { p0WithOffset = p0; continue; }
                     var offsetDirection = Settings.PathfindingSettings.WorldPathSettings.OffsetPaths
-                        ? (p1 - p0) switch { var s => new Vector2(s.Y, -s.X) / s.Length() }
+                        ? (p1 - p0) switch { var s when s.LengthSquared() > 0.0001f => new Vector2(s.Y, -s.X) / s.Length(), _ => Vector2.Zero }
                         : Vector2.Zero;
                     var finalOffset = offsetDirection * offsetAmount * Settings.PathfindingSettings.WorldPathSettings.PathThickness;
                     p0 = p1;
@@ -414,13 +496,16 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
 
     private Vector2 TranslateGridDeltaToMapDelta(Vector2 delta, float deltaZ)
     {
+        if (!IsFinite(delta) || !float.IsFinite(deltaZ) || !double.IsFinite(_mapScale) || _mapScale <= 0)
+            return new Vector2(float.NaN, float.NaN);
         deltaZ /= GridToWorldMultiplier; //z is normally "world" units, translate to grid
         return (float)_mapScale * new Vector2((delta.X - delta.Y) * CameraAngleCos, (deltaZ - (delta.X + delta.Y)) * CameraAngleSin);
     }
 
     private void DrawLargeMap(Vector2 mapCenter)
     {
-        if (!Settings.DrawWalkableMap || !Graphics.HasImage(TextureName) || _areaDimensions == null)
+        if (!Settings.DrawWalkableMap || !Graphics.HasImage(TextureName) || _areaDimensions == null ||
+            !IsFinite(mapCenter) || !double.IsFinite(_mapScale) || _mapScale <= 0)
             return;
         var player = GameController.Game.IngameState.Data.LocalPlayer;
         var playerRender = player.GetComponent<ExileCore2.PoEMemory.Components.Render>();
@@ -428,15 +513,19 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
             return;
         var rectangleF = new RectangleF(-playerRender.GridPos().X, -playerRender.GridPos().Y, _areaDimensions.Value.X, _areaDimensions.Value.Y);
         var playerHeight = -playerRender.UnclampedHeight;
+        if (!float.IsFinite(playerHeight) || !IsFinite(playerRender.GridPos())) return;
         var p1 = mapCenter + TranslateGridDeltaToMapDelta(new Vector2(rectangleF.Left, rectangleF.Top), playerHeight);
         var p2 = mapCenter + TranslateGridDeltaToMapDelta(new Vector2(rectangleF.Right, rectangleF.Top), playerHeight);
         var p3 = mapCenter + TranslateGridDeltaToMapDelta(new Vector2(rectangleF.Right, rectangleF.Bottom), playerHeight);
         var p4 = mapCenter + TranslateGridDeltaToMapDelta(new Vector2(rectangleF.Left, rectangleF.Bottom), playerHeight);
-        _backGroundWindowPtr.AddImageQuad(Graphics.GetTextureId(TextureName), p1, p2, p3, p4);
+        if (IsFinite(p1) && IsFinite(p2) && IsFinite(p3) && IsFinite(p4))
+            _backGroundWindowPtr.AddImageQuad(Graphics.GetTextureId(TextureName), p1, p2, p3, p4);
     }
 
     private void DrawTargets(Vector2 mapCenter)
     {
+        if (_heightData == null || !IsFinite(mapCenter) || !double.IsFinite(_mapScale) || _mapScale <= 0)
+            return;
         var color = Settings.PathfindingSettings.TargetNameColor.Value;
         var player = GameController.Game.IngameState.Data.LocalPlayer;
         var playerRender = player.GetComponent<ExileCore2.PoEMemory.Components.Render>();
@@ -444,6 +533,7 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
             return;
         var playerPosition = new Vector2(playerRender.GridPos().X, playerRender.GridPos().Y);
         var playerHeight = -playerRender.UnclampedHeight;
+        if (!IsFinite(playerPosition) || !float.IsFinite(playerHeight)) return;
         var ithElement = 0;
         if (Settings.PathfindingSettings.ShowPathsToTargetsOnMap)
         {
@@ -453,28 +543,35 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
                 ithElement %= 5;
                 foreach (var elem in route.Path.Skip(ithElement).GetEveryNth(5))
                 {
+                    if (!InBounds(elem, _heightData) || !float.IsFinite(_heightData[elem.Y][elem.X])) continue;
                     var mapDelta = TranslateGridDeltaToMapDelta(new Vector2(elem.X, elem.Y) - playerPosition, playerHeight + _heightData[elem.Y][elem.X]);
-                    DrawBox(mapCenter + mapDelta - new Vector2(2, 2), mapCenter + mapDelta + new Vector2(2, 2), route.MapColor());
+                    var mapPos = mapCenter + mapDelta;
+                    if (IsFinite(mapPos)) DrawBox(mapPos - new Vector2(2, 2), mapPos + new Vector2(2, 2), route.MapColor());
                 }
             }
         }
 
         if (Settings.PathfindingSettings.ShowAllTargets)
         {
+            // Compile the filter once per frame instead of once per location: this loop can run
+            // over thousands of _locationsByPosition entries and previously allocated a fresh Regex each.
+            var nameFilter = string.IsNullOrEmpty(Settings.PathfindingSettings.TargetNameFilter)
+                ? null
+                : new Regex(Settings.PathfindingSettings.TargetNameFilter);
+            var maxTargetNameCount = Settings.PathfindingSettings.MaxTargetNameCount;
+
+            bool TargetFilter(string t) =>
+                (nameFilter?.IsMatch(t) ?? true) &&
+                _allTargetLocations.GetValueOrDefault(t) is { } list && list.Count <= maxTargetNameCount;
+
             foreach (var (location, texts) in _locationsByPosition)
             {
-                var regex = string.IsNullOrEmpty(Settings.PathfindingSettings.TargetNameFilter)
-                    ? null
-                    : new Regex(Settings.PathfindingSettings.TargetNameFilter);
-
-                bool TargetFilter(string t) =>
-                    (regex?.IsMatch(t) ?? true) &&
-                    _allTargetLocations.GetValueOrDefault(t) is { } list && list.Count <= Settings.PathfindingSettings.MaxTargetNameCount;
-
                 var text = string.Join("\n", texts.Distinct().Where(TargetFilter));
+                if (string.IsNullOrEmpty(text) || !InBounds(location, _heightData) || !float.IsFinite(_heightData[location.Y][location.X])) continue;
                 var textOffset = Graphics.MeasureText(text) / 2f;
                 var mapDelta = TranslateGridDeltaToMapDelta(location - playerPosition, playerHeight + _heightData[location.Y][location.X]);
                 var mapPos = mapCenter + mapDelta;
+                if (!IsFinite(mapPos) || !IsFinite(textOffset)) continue;
                 if (Settings.PathfindingSettings.EnableTargetNameBackground)
                     DrawBox(mapPos - textOffset, mapPos + textOffset, Color.Black);
                 DrawText(text, mapPos - textOffset, color);
@@ -487,12 +584,14 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
                 foreach (var clusterPosition in description.Locations)
                 {
                     float clusterHeight = 0;
-                    if (clusterPosition.X < _heightData[0].Length && clusterPosition.Y < _heightData.Length)
+                    if (InBounds(clusterPosition, _heightData))
                         clusterHeight = _heightData[(int)clusterPosition.Y][(int)clusterPosition.X];
+                    if (!float.IsFinite(clusterHeight)) continue;
                     var text = description.DisplayName;
                     var textOffset = Graphics.MeasureText(text) / 2f;
                     var mapDelta = TranslateGridDeltaToMapDelta(clusterPosition - playerPosition, playerHeight + clusterHeight);
                     var mapPos = mapCenter + mapDelta;
+                    if (!IsFinite(mapPos) || !IsFinite(textOffset)) continue;
                     if (Settings.PathfindingSettings.EnableTargetNameBackground)
                         DrawBox(mapPos - textOffset, mapPos + textOffset, Color.Black);
                     DrawText(text, mapPos - textOffset, color);
@@ -500,4 +599,18 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
             }
         }
     }
+
+    private static bool IsFinite(Vector2 value)
+        => float.IsFinite(value.X) && float.IsFinite(value.Y);
+
+    private static bool IsFinite(Vector3 value)
+        => float.IsFinite(value.X) && float.IsFinite(value.Y) && float.IsFinite(value.Z);
+
+    private static bool InBounds(Vector2i point, float[][] data)
+        => data != null && point.Y >= 0 && point.Y < data.Length && data[point.Y] != null &&
+           point.X >= 0 && point.X < data[point.Y].Length;
+
+    private static bool InBounds(Vector2 point, float[][] data)
+        => data != null && IsFinite(point) && point.X >= 0 && point.Y >= 0 &&
+           point.Y < data.Length && data[(int)point.Y] != null && point.X < data[(int)point.Y].Length;
 }

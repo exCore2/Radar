@@ -81,7 +81,7 @@ public partial class Radar
 
             var instanceData = new OptimizedInstanceData
             {
-                Name = GameController.Area.CurrentArea.Area.RawName,
+                Name = GameController.Area.CurrentArea.Area.Id,
                 W = dimensions.X,
                 H = dimensions.Y,
                 Tiles = tilePositions,

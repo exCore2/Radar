@@ -29,7 +29,6 @@ public partial class Radar
         {
             //unfortunately the library doesn't respect our allocation settings inside BuildMapImage
             using var imageCopy = image.Clone();
-            imageCopy.Save("test.png");
             Graphics.AddOrUpdateImage(TextureName, imageCopy);
         }
     }
@@ -38,7 +37,8 @@ public partial class Radar
     // Was originally returning the existing png but switched to svg for scaleability
     private Image<Rgba32> BuildMapImage()
     {
-        if (_areaDimensions == null || _heightData == null || _processedTerrainData == null)
+        if (_areaDimensions == null || _heightData == null || _processedTerrainData == null ||
+            _areaDimensions.Value.X <= 0 || _areaDimensions.Value.Y <= 0)
             return null;
 
         var gridHeightData = _heightData;
@@ -51,6 +51,7 @@ public partial class Radar
         {
             var minHeight = gridHeightData.Min(x => x.Min());
             var maxHeight = gridHeightData.Max(x => x.Max());
+            var heightRange = MathF.Abs(maxHeight - minHeight) > float.Epsilon ? maxHeight - minHeight : 1f;
             image.Mutate(configuration, c => c.ProcessPixelRowsAsVector4((row, i) =>
             {
                 for (var x = 0; x < row.Length - 1; x += 2)
@@ -58,7 +59,7 @@ public partial class Radar
                     var cellData = gridHeightData[i.Y][x];
                     for (var x_s = 0; x_s < 2; ++x_s)
                     {
-                        row[x + x_s] = new Vector4(0, (cellData - minHeight) / (maxHeight - minHeight), 0, 1);
+                        row[x + x_s] = new Vector4(0, (cellData - minHeight) / heightRange, 0, 1);
                     }
                 }
             }));
@@ -105,7 +106,7 @@ public partial class Radar
                 binaryMap.Mutate(ctx => ctx.GaussianBlur(blurSigma));
 
                 var eps = Settings.Debug.AlternativeEdgeSettings.OutlineTransitionThreshold.Value;
-                var aaWidth = Settings.Debug.AlternativeEdgeSettings.OutlineFeatherWidth.Value;
+                var aaWidth = MathF.Max(Settings.Debug.AlternativeEdgeSettings.OutlineFeatherWidth.Value, 0.0001f);
 
                 Parallel.For(
                     0, maxY, y =>
@@ -202,7 +203,7 @@ public partial class Radar
                 if (!Settings.Debug.StandardEdgeSettings.SkipEdgeDetector)
                 {
                     var edgeDetector = new EdgeDetectorProcessor(EdgeDetectorKernel.Laplacian5x5, false)
-                       .CreatePixelSpecificProcessor(configuration, image, image.Bounds());
+                       .CreatePixelSpecificProcessor(configuration, image, image.Bounds);
                     edgeDetector.Execute();
                 }
 
@@ -239,8 +240,8 @@ public partial class Radar
             }
 
             var targetSize = new Size(newWidth, newHeight);
-            var resizer = new ResizeProcessor(new ResizeOptions { Size = targetSize }, image.Size())
-                .CreatePixelSpecificCloningProcessor(configuration, image, image.Bounds());
+            var resizer = new ResizeProcessor(new ResizeOptions { Size = targetSize }, image.Size)
+                .CreatePixelSpecificCloningProcessor(configuration, image, image.Bounds);
             resizer.Execute();
         }
 
