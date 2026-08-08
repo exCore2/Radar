@@ -48,6 +48,9 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     private ImDrawListPtr _backGroundWindowPtr;
     private ConcurrentDictionary<Vector2, RouteDescription> _routes = new();
     private bool _settingsHooksAttached;
+    private volatile bool _restartPathFindingRequested;
+    private volatile bool _mapTextureRefreshRequested;
+    private volatile bool _dumpRequested;
 
     public override bool Initialise()
     {
@@ -171,16 +174,17 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     }
 
     private void OnManualDumpHotkeyChanged() => Input.RegisterKey(Settings.InstanceDumpSettings.ManualDumpHotkey.Value);
-    private void OnMaximumPathCountChanged(object _, int __) => Task.Run(RestartPathFinding);
-    private void OnTerrainColorChanged(object _, Color __) => GenerateMapTexture();
-    private void OnBoolMapRenderSettingChanged(object _, bool __) => GenerateMapTexture();
-    private void OnMaximumMapTextureDimensionChanged(object _, int __) => GenerateMapTexture();
-    private void OnFloatMapRenderSettingChanged(object _, float __) => GenerateMapTexture();
+    private void OnMaximumPathCountChanged(object _, int __) => _restartPathFindingRequested = true;
+    private void OnTerrainColorChanged(object _, Color __) => _mapTextureRefreshRequested = true;
+    private void OnBoolMapRenderSettingChanged(object _, bool __) => _mapTextureRefreshRequested = true;
+    private void OnMaximumMapTextureDimensionChanged(object _, int __) => _mapTextureRefreshRequested = true;
+    private void OnFloatMapRenderSettingChanged(object _, float __) => _mapTextureRefreshRequested = true;
 
     private void OnEnableChanged(object _, bool enabled)
     {
         if (enabled)
         {
+            _restartPathFindingRequested = false;
             if (GameController?.Area?.CurrentArea is { } area) AreaChange(area);
             return;
         }
@@ -190,6 +194,9 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     public override void OnPluginDestroyForHotReload()
     {
         DetachSettingsHooks();
+        _restartPathFindingRequested = false;
+        _mapTextureRefreshRequested = false;
+        _dumpRequested = false;
         StopPathFinding();
         base.OnPluginDestroyForHotReload();
     }
@@ -197,6 +204,9 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
     public override void Dispose()
     {
         DetachSettingsHooks();
+        _restartPathFindingRequested = false;
+        _mapTextureRefreshRequested = false;
+        _dumpRequested = false;
         StopPathFinding();
         base.Dispose();
     }
@@ -268,6 +278,24 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
         if (!Settings.Enable)
             return;
 
+        if (_restartPathFindingRequested)
+        {
+            _restartPathFindingRequested = false;
+            RestartPathFinding();
+        }
+
+        if (_mapTextureRefreshRequested)
+        {
+            _mapTextureRefreshRequested = false;
+            GenerateMapTexture();
+        }
+
+        if (_dumpRequested)
+        {
+            _dumpRequested = false;
+            DumpCurrentAreaInstance();
+        }
+
         if (Settings.InstanceDumpSettings.ManualDumpHotkey.PressedOnce())
         {
             RunDump();
@@ -332,10 +360,27 @@ public partial class Radar : BaseSettingsPlugin<RadarSettings>
 
     private void RunDump()
     {
-        Task.Run(() =>
+        // The dump reads GameController/terrain state. Queue it for the main
+        // render pass instead of touching host memory from a worker thread.
+        _dumpRequested = true;
+    }
+
+    private void DumpCurrentAreaInstance()
+    {
+        try
         {
-            DumpInstanceData($@"{DirectoryFullName}\instance_dumps\{GameController.Area.CurrentArea.Area.Id}_{SanitizeAreaName(GameController.Area.CurrentArea.Area.Name)}");
-        });
+            var area = GameController?.Area?.CurrentArea;
+            if (area == null)
+                return;
+
+            var areaId = area.Area.Id;
+            var areaName = SanitizeAreaName(area.Area.Name);
+            DumpInstanceData($@"{DirectoryFullName}\instance_dumps\{areaId}_{areaName}");
+        }
+        catch (Exception ex)
+        {
+            DebugWindow.LogError($"Radar dump request failed: {ex}");
+        }
     }
 
     private void DrawRooms()
