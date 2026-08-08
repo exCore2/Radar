@@ -332,17 +332,30 @@ public partial class Radar
 
     private bool IsGridWalkable(Vector2i tile)
     {
-        return _processedTerrainData[tile.Y][tile.X] is 5 or 4;
+        return _processedTerrainData != null &&
+               tile.Y >= 0 &&
+               tile.Y < _processedTerrainData.Length &&
+               _processedTerrainData[tile.Y] != null &&
+               tile.X >= 0 &&
+               tile.X < _processedTerrainData[tile.Y].Length &&
+               _processedTerrainData[tile.Y][tile.X] is 5 or 4;
     }
 
     private IEnumerable<Vector2i> GetAllNeighborTiles(Vector2i start)
     {
+        if (_areaDimensions is not { } dimensions || dimensions.X <= 0 || dimensions.Y <= 0)
+            yield break;
+
+        start = new Vector2i(
+            Math.Clamp(start.X, 0, dimensions.X - 1),
+            Math.Clamp(start.Y, 0, dimensions.Y - 1));
+
         foreach (var range in Enumerable.Range(1, 100000))
         {
             var xStart = Math.Max(0, start.X - range);
             var yStart = Math.Max(0, start.Y - range);
-            var xEnd = Math.Min(_areaDimensions.Value.X, start.X + range);
-            var yEnd = Math.Min(_areaDimensions.Value.Y, start.Y + range);
+            var xEnd = Math.Min(dimensions.X - 1, start.X + range);
+            var yEnd = Math.Min(dimensions.Y - 1, start.Y + range);
             for (var x = xStart; x <= xEnd; x++)
             {
                 yield return new Vector2i(x, yStart);
@@ -355,7 +368,7 @@ public partial class Radar
                 yield return new Vector2i(xEnd, y);
             }
 
-            if (xStart == 0 && yStart == 0 && xEnd == _areaDimensions.Value.X && yEnd == _areaDimensions.Value.Y)
+            if (xStart == 0 && yStart == 0 && xEnd == dimensions.X - 1 && yEnd == dimensions.Y - 1)
             {
                 break;
             }
