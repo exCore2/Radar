@@ -2001,6 +2001,12 @@
       "TargetType": "Entity"
     },
     {
+      "Name": "Metadata/Terrain/Leagues/Ritual/RitualRuneObject",
+      "ExpectedCount": 99,
+      "DisplayName": "Ritual Altar",
+      "TargetType": "Entity"
+    },
+    {
       "Name": "*",
       "Rooms": [ "*rune*" ],
       "ExpectedCount": 1,

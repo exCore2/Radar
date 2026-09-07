@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ExileCore2.PoEMemory.Components;
 using ExileCore2.PoEMemory.MemoryObjects;
+using ExileCore2.Shared.Enums;
 using ExileCore2.Shared.Helpers;
 using GameOffsets2;
 using GameOffsets2.Native;
@@ -85,7 +86,7 @@ public partial class Radar
 
             async Task CheckEntity()
             {
-                while (entity.IsValid && entity.GetComponent<Chest>()?.IsOpened != true)
+                while (!IsRouteFinished(entity))
                 {
                     await Task.Delay(100, cancellationToken);
                 }
@@ -117,6 +118,88 @@ public partial class Radar
                 routes.AddOrUpdate(target, rd, (_, _) => rd);
             }
         }, cancellationToken);
+    }
+
+    // A ritual altar is not a chest: it keeps a valid entity for the whole map after its ritual
+    // has been run, and carries no Chest component to report that it is finished, so its
+    // completion has to be read off the state machine instead.
+    private const string RitualRunePathPrefix = "Metadata/Terrain/Leagues/Ritual/RitualRune";
+    private const string CurrentStateName = "current_state";
+    // current_state, traced through one altar's whole life in a map:
+    //   0  the pack around the altar is still alive and it cannot be clicked
+    //   1  the pack is dead, interaction_enabled flips to 1, the ritual can be started
+    //   2  the ritual is running
+    //   3  the ritual is done, the zone's rituals_completed has gone up, and the altar
+    //      reports isTargetable false
+    // Only 3 should drop the route. States 0 and 2 are both unclickable but still worth
+    // walking to, so keying removal on clickability instead would erase the path exactly
+    // when it is most useful.
+    private const int RitualRuneCompletedState = 3;
+
+    /// <summary>
+    /// Whether the route to an entity target should be retired.
+    /// </summary>
+    /// <remarks>
+    /// For most targets an entity that has gone invalid is gone for good, so the original rule --
+    /// invalid, or an opened chest -- still holds. A ritual altar breaks it: the client only keeps
+    /// entities within roughly 250 grid units per axis, and a map's altars sit far enough apart
+    /// that walking to one unloads the others. Retiring on invalidity there deletes the route to
+    /// every altar except the one being stood on, and <see cref="Radar.EntityAdded"/> will not
+    /// rebuild it when the altar loads again, because its position is already known. So an altar
+    /// is retired only on a positively observed completed state.
+    /// </remarks>
+    private bool IsRouteFinished(Entity entity)
+    {
+        if (entity.Path.StartsWith(RitualRunePathPrefix, StringComparison.Ordinal))
+        {
+            return IsRitualAltarSpent(entity.Id);
+        }
+
+        return !entity.IsValid || entity.GetComponent<Chest>()?.IsOpened == true;
+    }
+
+    /// <summary>
+    /// Reads an altar out of the live entity list by id instead of trusting the reference the
+    /// route was created with, which goes invalid every time the player walks out of range. Entity
+    /// ids survive that unload, so they identify the altar across it where the reference does not.
+    /// </summary>
+    /// <returns>
+    /// False when the altar is not currently loaded: out of range is unobservable, not finished.
+    /// </returns>
+    private bool IsRitualAltarSpent(uint entityId)
+    {
+        foreach (var entity in GameController.EntityListWrapper.ValidEntitiesByType[EntityType.Terrain])
+        {
+            if (entity.Id == entityId)
+            {
+                return GetState(entity, CurrentStateName) is RitualRuneCompletedState;
+            }
+        }
+
+        return false;
+    }
+
+    /// <summary>
+    /// One named state off an entity's state machine, or null when the entity has no state
+    /// machine or does not carry that state.
+    /// </summary>
+    private static int? GetState(Entity entity, string stateName)
+    {
+        var states = entity.GetComponent<StateMachine>()?.States;
+        if (states == null)
+        {
+            return null;
+        }
+
+        foreach (var state in states)
+        {
+            if (state.Name == stateName)
+            {
+                return (int)state.Value;
+            }
+        }
+
+        return null;
     }
 
     private Task AddRoute(Vector2 target, Action<List<Vector2i>> callback, CancellationToken cancellationToken)
