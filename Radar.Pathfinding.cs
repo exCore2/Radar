@@ -65,6 +65,15 @@ public partial class Radar
 
     private void AddRoute(Vector2 target, List<TargetDescription> targetDescriptions, Entity entity)
     {
+        if (_addRouteAction == null)
+        {
+            // Pathfinding has not started for this area yet, so there is nothing to add a route to
+            // and _getColor is still null. StartPathFinding adds routes for every known location,
+            // so this one is not lost. Without this, an entity arriving between an area change and
+            // StartPathFinding threw out of EntityAdded.
+            return;
+        }
+
         var color = _getColor();
 
         Color GetWorldColor() => Settings.PathfindingSettings.WorldPathSettings.UseRainbowColorsForPaths
